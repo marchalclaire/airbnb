@@ -33,8 +33,10 @@ export default function ProfileScreen() {
   }, []);
 
   return (
-    <View>
-      <Text>{room.description}</Text>
-    </View>
+    <>
+      <View>
+        <Text>{room.description}</Text>
+      </View>
+    </>
   );
 }
