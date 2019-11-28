@@ -38,6 +38,7 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView>
+      {/* tout mettre dans le isLoading (meme la map sinon il ne trouve pas .loc) */}
       {isLoading === true ? (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -45,38 +46,40 @@ export default function ProfileScreen() {
           <ActivityIndicator size="large" color="red" />
         </View>
       ) : (
-        <RoomCard item={room}></RoomCard>
+        // mettre des fragments
+        <>
+          <RoomCard item={room}></RoomCard>
+          <Text
+            onPress={() => {
+              // ! permet d'inverser le boolean
+              setIsDescriptionDisplayed(!isDescriptionDisplayed);
+            }}
+            style={{ marginHorizontal: 20 }}
+            numberOfLines={isDescriptionDisplayed === false ? 2 : 0}
+          >
+            {room.description}
+          </Text>
+
+          <MapView
+            showsUserLocation={false}
+            // provider="google"
+            style={{ height: 300, marginTop: 50 }}
+            initialRegion={{
+              latitude: room.loc[1],
+              longitude: room.loc[0],
+              latitudeDelta: 0.03,
+              longitudeDelta: 0.03
+            }}
+          >
+            <MapView.Marker
+              coordinate={{
+                latitude: room.loc[1],
+                longitude: room.loc[0]
+              }}
+            />
+          </MapView>
+        </>
       )}
-
-      <Text
-        onPress={() => {
-          // ! permet d'inverser le boolean
-          setIsDescriptionDisplayed(!isDescriptionDisplayed);
-        }}
-        style={{ marginHorizontal: 20 }}
-        numberOfLines={isDescriptionDisplayed === false ? 2 : 0}
-      >
-        {room.description}
-      </Text>
-
-      {/* <MapView
-        showsUserLocation={false}
-        // provider="google"
-        style={{ height: 300, marginTop: 50 }}
-        initialRegion={{
-          latitude: room.loc[1],
-          longitude: room.loc[0],
-          latitudeDelta: 0.03,
-          longitudeDelta: 0.03
-        }}
-      >
-        <MapView.Marker
-          coordinate={{
-            latitude: room.loc[1],
-            longitude: room.loc[0]
-          }}
-        />
-      </MapView> */}
     </ScrollView>
   );
 }

@@ -7,7 +7,8 @@ import {
   StyleSheet,
   TextInput,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  KeyboardAvoidingView
 } from "react-native";
 import axios from "axios";
 
@@ -18,13 +19,18 @@ export default function SignInScreen(props) {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.mainContainer}>
+    <KeyboardAvoidingView
+      behavior="padding" //dans doc composant
+      style={styles.mainContainer}
+    >
       <View style={styles.topContainer}>
         <Ionicons name="md-home" size={130} color="white" />
         <Text style={styles.topTitle}>Welcome</Text>
       </View>
+
       <View style={styles.formContainer}>
         <TextInput
+          autoCapitalize="none" //le texte de l'input commence par une minuscule
           style={styles.input}
           placeholder="Email"
           value={email}
@@ -35,6 +41,7 @@ export default function SignInScreen(props) {
         <View style={styles.underline}></View>
 
         <TextInput
+          autoCapitalize="none" //le texte de l'input commence par une minuscule
           style={styles.input}
           placeholder="Password"
           value={password}
@@ -88,7 +95,7 @@ export default function SignInScreen(props) {
           <Text>Create an account</Text>
         </TouchableOpacity> */}
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({
@@ -130,3 +137,7 @@ const styles = StyleSheet.create({
     color: "#ff5a5f"
   }
 });
+
+// Body parameters:
+// "email" (arno@airbnb-api.com)
+// "password" (password01)
